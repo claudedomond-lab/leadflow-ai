@@ -5,6 +5,7 @@ import Analytics from './pages/Analytics';
 import Settings from './pages/Settings';
 import Webhook from './pages/Webhook';
 import DealerDashboard from './pages/DealerDashboard';
+import DealerOnboarding from './pages/DealerOnboarding';
 import __Layout from './Layout.jsx';
 
 
@@ -16,6 +17,7 @@ export const PAGES = {
     "Settings": Settings,
     "Webhook": Webhook,
     "DealerDashboard": DealerDashboard,
+    "DealerOnboarding": DealerOnboarding,
 }
 
 export const pagesConfig = {
