@@ -256,6 +256,17 @@ export default function DealerManagement() {
             )}
           </CardContent>
         </Card>
+
+        {/* CSV Import Modal */}
+        <CSVImportModal 
+          open={csvModalOpen}
+          onClose={() => {
+            setCsvModalOpen(false);
+            setSelectedDealerId(null);
+            queryClient.invalidateQueries({ queryKey: ['all-dealers'] });
+          }}
+          dealerId={selectedDealerId}
+        />
       </div>
     </div>
   );
