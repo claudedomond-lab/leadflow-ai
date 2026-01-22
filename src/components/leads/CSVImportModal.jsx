@@ -51,8 +51,8 @@ export default function CSVImportModal({ open, onClose, dealerId }) {
       setCsvHeaders(headers);
 
       // Upload file
-      const { data } = await base44.integrations.Core.UploadFile({ file: selectedFile });
-      setFileUrl(data.file_url);
+      const uploadResponse = await base44.integrations.Core.UploadFile({ file: selectedFile });
+      setFileUrl(uploadResponse.file_url);
 
       setStep('mapping');
     } catch (error) {
