@@ -165,11 +165,15 @@ Deno.serve(async (req) => {
 
 function parseCSV(text) {
     const lines = text.split('\n').filter(line => line.trim());
-    const headers = lines[0].split(',').map(h => h.trim());
+    if (lines.length === 0) return [];
+    
+    // Handle headers - remove quotes
+    const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
     const rows = [];
 
     for (let i = 1; i < lines.length; i++) {
-        const values = lines[i].split(',').map(v => v.trim());
+        // Simple CSV parsing - handles quoted values
+        const values = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''));
         const row = {};
         headers.forEach((header, idx) => {
             row[header] = values[idx] || '';

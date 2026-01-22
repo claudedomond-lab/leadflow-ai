@@ -32,23 +32,32 @@ export default function CSVImportModal({ open, onClose, dealerId }) {
     const selectedFile = e.target.files[0];
     if (!selectedFile) return;
 
+    if (!selectedFile.name.endsWith('.csv')) {
+      alert('Please upload a CSV file');
+      return;
+    }
+
     setFile(selectedFile);
     setLoading(true);
 
     try {
+      // Parse CSV headers first
+      const text = await selectedFile.text();
+      const lines = text.split('\n').filter(line => line.trim());
+      if (lines.length === 0) {
+        throw new Error('CSV file is empty');
+      }
+      const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+      setCsvHeaders(headers);
+
       // Upload file
       const { data } = await base44.integrations.Core.UploadFile({ file: selectedFile });
       setFileUrl(data.file_url);
 
-      // Parse CSV headers
-      const text = await selectedFile.text();
-      const lines = text.split('\n');
-      const headers = lines[0].split(',').map(h => h.trim());
-      setCsvHeaders(headers);
-
       setStep('mapping');
     } catch (error) {
       alert('File upload failed: ' + error.message);
+      setFile(null);
     } finally {
       setLoading(false);
     }
@@ -115,25 +124,28 @@ export default function CSVImportModal({ open, onClose, dealerId }) {
           <div className="space-y-4">
             <div className="border-2 border-dashed border-slate-300 rounded-lg p-12 text-center">
               <FileUp className="w-12 h-12 text-slate-400 mx-auto mb-4" />
-              <Label htmlFor="csv-file" className="cursor-pointer">
-                <div className="text-lg font-medium text-slate-900 mb-2">
-                  Click to upload CSV file
-                </div>
-                <p className="text-sm text-slate-500 mb-4">
-                  Or drag and drop your file here
-                </p>
-                <Input
-                  id="csv-file"
-                  type="file"
-                  accept=".csv"
-                  onChange={handleFileUpload}
-                  className="hidden"
-                />
-                <Button disabled={loading}>
-                  {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Upload className="w-4 h-4 mr-2" />}
-                  Select CSV File
+              <div className="text-lg font-medium text-slate-900 mb-2">
+                Upload CSV file
+              </div>
+              <p className="text-sm text-slate-500 mb-4">
+                CSV must include columns for: Name, Email, Phone
+              </p>
+              <Input
+                id="csv-file"
+                type="file"
+                accept=".csv"
+                onChange={handleFileUpload}
+                disabled={loading}
+                className="hidden"
+              />
+              <label htmlFor="csv-file">
+                <Button disabled={loading} asChild>
+                  <span className="cursor-pointer">
+                    {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Upload className="w-4 h-4 mr-2" />}
+                    Select CSV File
+                  </span>
                 </Button>
-              </Label>
+              </label>
             </div>
           </div>
         )}
