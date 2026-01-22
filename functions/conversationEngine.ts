@@ -14,7 +14,26 @@ Deno.serve(async (req) => {
         const lead = await base44.asServiceRole.entities.Lead.get(lead_id);
         const conversations = await base44.asServiceRole.entities.Conversation.filter({ lead_id });
         const config = await base44.asServiceRole.entities.VerticalConfig.filter({ vertical: lead.vertical });
-        
+
+        // Check for appointment slot selection
+        const trimmedMessage = incoming_message.trim();
+        if (/^[1-4]$/.test(trimmedMessage) && lead.vertical_data?.proposed_slots) {
+            const slotIndex = parseInt(trimmedMessage) - 1;
+            const selectedSlot = lead.vertical_data.proposed_slots[slotIndex];
+            if (selectedSlot) {
+                const actionResult = await base44.asServiceRole.functions.invoke('bookAppointment', {
+                    lead_id,
+                    appointment_time: selectedSlot
+                });
+                return Response.json({
+                    action: 'appointment_booked',
+                    appointment_id: actionResult.data.appointment_id,
+                    slot: selectedSlot,
+                    message: actionResult.data.message
+                });
+            }
+        }
+
         // Build conversation context
         const conversationHistory = conversations
             .sort((a, b) => new Date(a.created_date) - new Date(b.created_date))
@@ -23,7 +42,7 @@ Deno.serve(async (req) => {
             .join('\n');
 
         // AI Decision Prompt
-        const prompt = `You are an expert lead conversion AI for a ${lead.vertical} business.
+        const prompt = `You are an expert lead conversion AI for a ${lead.vertical} business. Your primary goal is to convert leads into scheduled appointments with minimal human intervention. Always prioritize booking test drives or appointments over just qualifying or following up.
 
 Lead Profile:
 - Name: ${lead.name}
@@ -40,19 +59,26 @@ Lead's Latest Message:
 "${incoming_message}"
 
 Your Task:
-1. Detect the lead's intent (interested/price_shopping/not_ready/objection/ready_to_book)
-2. Determine best response strategy (engage/qualify/close/push_appointment/handle_objection/escalate)
-3. Craft a natural, conversational response
-4. Decide next action
+1. Detect the lead's intent (interested/price_shopping/not_ready/objection/ready_to_book/negotiating/slot_selection)
+2. Determine best response strategy (engage/qualify/close/push_appointment/handle_objection/escalate/book_now)
+3. Craft a natural, conversational response that moves toward booking
+4. Decide next action - prioritize booking if intent shows readiness
 
-Tone: ${config[0]?.tone || 'friendly'} but direct
+Guidelines:
+- If intent is ready_to_book or negotiating positively, immediately propose specific appointment slots
+- Be persistent but not pushy - focus on value and urgency
+- Handle objections by addressing concerns and redirecting to booking
+- If lead mentions timing or availability, suggest slots immediately
+- Goal: Get to "book_appointment" action as quickly as possible
+
+Tone: ${config[0]?.tone || 'friendly'} but direct and action-oriented
 
 Return JSON:
 {
-  "intent_detected": "interested|price_shopping|not_ready|objection|ready_to_book|negotiating",
+  "intent_detected": "interested|price_shopping|not_ready|objection|ready_to_book|negotiating|slot_selection",
   "sentiment": "positive|neutral|negative",
   "urgency": "high|medium|low",
-  "strategy": "engage|qualify|close|push_appointment|handle_objection|escalate",
+  "strategy": "engage|qualify|close|push_appointment|handle_objection|escalate|book_now",
   "response_message": "Your natural response here",
   "next_action": "book_appointment|follow_up|escalate|qualify_more|none",
   "intent_score_adjustment": 5,

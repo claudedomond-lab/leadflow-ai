@@ -61,11 +61,22 @@ Deno.serve(async (req) => {
             }
         });
 
+        // Trigger initial auto-response
+        const initialResponse = await base44.asServiceRole.functions.invoke('sendInitialResponse', {
+            lead_id: lead.id
+        });
+
+        // Update lead status after initial response
+        await base44.asServiceRole.entities.Lead.update(lead.id, {
+            status: 'contacted'
+        });
+
         return Response.json({
             success: true,
             lead_id: lead.id,
-            status: lead.status,
-            evaluation: evaluation.data
+            status: 'contacted',
+            evaluation: evaluation.data,
+            initial_response: initialResponse.data
         });
 
     } catch (error) {

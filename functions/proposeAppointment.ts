@@ -54,9 +54,13 @@ Deno.serve(async (req) => {
             channel: 'sms'
         });
 
-        // Update lead status
+        // Update lead status and store proposed slots
         await base44.asServiceRole.entities.Lead.update(lead_id, {
-            status: 'qualifying'
+            status: 'qualifying',
+            vertical_data: {
+                ...(lead.vertical_data || {}),
+                proposed_slots: slots.slice(0, 4).map(s => s.toISOString())
+            }
         });
 
         return Response.json({

@@ -24,11 +24,16 @@ Deno.serve(async (req) => {
             const lastContact = new Date(lead.last_contact_date);
             const daysSinceContact = Math.floor((now - lastContact) / (1000 * 60 * 60 * 24));
 
+            // Skip recently contacted leads to allow conversation flow
+            if (lead.status === 'contacted' && daysSinceContact < 1) {
+                return false;
+            }
+
             // Follow-up schedule: Day 0, 1, 3, 5, 7
             const followUpSchedule = [0, 1, 3, 5, 7];
             const currentDay = lead.follow_up_day || 0;
             const nextDayIndex = followUpSchedule.indexOf(currentDay) + 1;
-            
+
             if (nextDayIndex < followUpSchedule.length) {
                 const targetDay = followUpSchedule[nextDayIndex];
                 return daysSinceContact >= targetDay;
