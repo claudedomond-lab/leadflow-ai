@@ -6,6 +6,7 @@ import Settings from './pages/Settings';
 import Webhook from './pages/Webhook';
 import DealerDashboard from './pages/DealerDashboard';
 import DealerOnboarding from './pages/DealerOnboarding';
+import MasterAdmin from './pages/MasterAdmin';
 import __Layout from './Layout.jsx';
 
 
@@ -18,6 +19,7 @@ export const PAGES = {
     "Webhook": Webhook,
     "DealerDashboard": DealerDashboard,
     "DealerOnboarding": DealerOnboarding,
+    "MasterAdmin": MasterAdmin,
 }
 
 export const pagesConfig = {
