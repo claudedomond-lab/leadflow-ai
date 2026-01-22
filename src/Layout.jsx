@@ -15,14 +15,14 @@ import { Button } from "@/components/ui/button";
 
 const navigation = [
   { name: "Dashboard", href: "Dashboard", icon: LayoutDashboard },
+  { name: "Lead Search", href: "LeadSearch", icon: LayoutDashboard },
+  { name: "Dealer Mgmt", href: "DealerManagement", icon: Settings },
   { name: "Appointments", href: "Appointments", icon: Calendar },
   { name: "AI Agent", href: "AIAgent", icon: Bot },
   { name: "Analytics", href: "Analytics", icon: BarChart3 },
   { name: "Dealer Report", href: "DealerDashboard", icon: BarChart3 },
   { name: "Master Admin", href: "MasterAdmin", icon: Settings },
   { name: "Onboard Dealer", href: "DealerOnboarding", icon: Settings },
-  { name: "Webhook", href: "Webhook", icon: Menu },
-  { name: "Settings", href: "Settings", icon: Settings },
 ];
 
 export default function Layout({ children, currentPageName }) {

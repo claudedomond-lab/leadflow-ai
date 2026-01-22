@@ -7,6 +7,8 @@ import Webhook from './pages/Webhook';
 import DealerDashboard from './pages/DealerDashboard';
 import DealerOnboarding from './pages/DealerOnboarding';
 import MasterAdmin from './pages/MasterAdmin';
+import DealerManagement from './pages/DealerManagement';
+import LeadSearch from './pages/LeadSearch';
 import __Layout from './Layout.jsx';
 
 
@@ -20,6 +22,8 @@ export const PAGES = {
     "DealerDashboard": DealerDashboard,
     "DealerOnboarding": DealerOnboarding,
     "MasterAdmin": MasterAdmin,
+    "DealerManagement": DealerManagement,
+    "LeadSearch": LeadSearch,
 }
 
 export const pagesConfig = {
