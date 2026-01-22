@@ -142,7 +142,10 @@ export default function DealerOnboarding() {
         <Card className="border-0 shadow-lg">
           <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
             <CardTitle className="flex items-center gap-2">
-              {steps[step - 1].icon && <steps[step - 1].icon className="w-5 h-5" />}
+              {(() => {
+                const StepIcon = steps[step - 1].icon;
+                return StepIcon ? <StepIcon className="w-5 h-5" /> : null;
+              })()}
               Step {step}: {steps[step - 1].title}
             </CardTitle>
           </CardHeader>
