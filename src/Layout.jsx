@@ -18,6 +18,7 @@ const navigation = [
   { name: "Appointments", href: "Appointments", icon: Calendar },
   { name: "AI Agent", href: "AIAgent", icon: Bot },
   { name: "Analytics", href: "Analytics", icon: BarChart3 },
+  { name: "Webhook", href: "Webhook", icon: Menu },
   { name: "Settings", href: "Settings", icon: Settings },
 ];
 
