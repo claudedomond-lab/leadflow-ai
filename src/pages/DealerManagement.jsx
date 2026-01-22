@@ -13,14 +13,18 @@ import {
   BarChart3,
   AlertCircle,
   CheckCircle,
-  Search
+  Search,
+  Upload
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "../utils";
+import CSVImportModal from "../components/leads/CSVImportModal";
 
 export default function DealerManagement() {
   const [searchQuery, setSearchQuery] = useState('');
   const [impersonating, setImpersonating] = useState(null);
+  const [csvModalOpen, setCsvModalOpen] = useState(false);
+  const [selectedDealerId, setSelectedDealerId] = useState(null);
   const queryClient = useQueryClient();
 
   const { data: dealers, isLoading } = useQuery({
@@ -199,6 +203,19 @@ export default function DealerManagement() {
                         </div>
 
                         <div className="flex items-center gap-3">
+                          {/* CSV Import */}
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => {
+                              setSelectedDealerId(dealer.dealer_id);
+                              setCsvModalOpen(true);
+                            }}
+                          >
+                            <Upload className="w-4 h-4 mr-2" />
+                            Import CSV
+                          </Button>
+
                           {/* Status Toggle */}
                           <div className="flex items-center gap-2">
                             <span className="text-xs text-slate-500">Active</span>
