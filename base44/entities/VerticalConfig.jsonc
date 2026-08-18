@@ -1,0 +1,68 @@
+{
+  "name": "VerticalConfig",
+  "type": "object",
+  "properties": {
+    "vertical": {
+      "type": "string",
+      "enum": [
+        "dealer",
+        "real_estate",
+        "local_services"
+      ]
+    },
+    "business_name": {
+      "type": "string"
+    },
+    "greeting_message": {
+      "type": "string",
+      "description": "Initial greeting for this vertical"
+    },
+    "qualification_questions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Questions to ask during qualification"
+    },
+    "appointment_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "business_hours": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string"
+        },
+        "end": {
+          "type": "string"
+        },
+        "days": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tone": {
+      "type": "string",
+      "enum": [
+        "formal",
+        "friendly",
+        "professional"
+      ],
+      "default": "professional"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "vertical",
+    "business_name"
+  ]
+}

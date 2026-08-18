@@ -1,0 +1,69 @@
+{
+  "name": "Appointment",
+  "type": "object",
+  "properties": {
+    "lead_id": {
+      "type": "string",
+      "description": "Reference to the lead"
+    },
+    "lead_name": {
+      "type": "string",
+      "description": "Lead's name for display"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "test_drive",
+        "showing",
+        "consultation",
+        "service_appointment",
+        "follow_up_call"
+      ],
+      "description": "Type of appointment"
+    },
+    "scheduled_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the appointment is scheduled"
+    },
+    "duration_minutes": {
+      "type": "number",
+      "default": 60
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "scheduled",
+        "confirmed",
+        "completed",
+        "cancelled",
+        "no_show"
+      ],
+      "default": "scheduled"
+    },
+    "location": {
+      "type": "string",
+      "description": "Where the appointment takes place"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "vertical": {
+      "type": "string",
+      "enum": [
+        "dealer",
+        "real_estate",
+        "local_services"
+      ]
+    },
+    "assigned_to": {
+      "type": "string",
+      "description": "User email of assigned agent"
+    }
+  },
+  "required": [
+    "lead_id",
+    "type",
+    "scheduled_date"
+  ]
+}

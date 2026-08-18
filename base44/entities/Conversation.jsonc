@@ -1,0 +1,53 @@
+{
+  "name": "Conversation",
+  "type": "object",
+  "properties": {
+    "lead_id": {
+      "type": "string",
+      "description": "Reference to the lead"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "ai",
+        "lead",
+        "human_agent"
+      ],
+      "description": "Who sent the message"
+    },
+    "message": {
+      "type": "string",
+      "description": "The message content"
+    },
+    "action_type": {
+      "type": "string",
+      "enum": [
+        "message",
+        "book_appointment",
+        "escalate",
+        "follow_up",
+        "qualification"
+      ],
+      "description": "Type of action taken"
+    },
+    "ai_reasoning": {
+      "type": "string",
+      "description": "AI's internal notes for this action"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "sms",
+        "email",
+        "chat",
+        "whatsapp"
+      ],
+      "default": "chat"
+    }
+  },
+  "required": [
+    "lead_id",
+    "role",
+    "message"
+  ]
+}

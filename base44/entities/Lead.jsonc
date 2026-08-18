@@ -1,0 +1,106 @@
+{
+  "name": "Lead",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Lead's full name"
+    },
+    "email": {
+      "type": "string",
+      "description": "Lead's email address"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Lead's phone number"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "website",
+        "facebook",
+        "google",
+        "referral",
+        "walk_in",
+        "phone",
+        "other"
+      ],
+      "description": "Where the lead came from"
+    },
+    "vertical": {
+      "type": "string",
+      "enum": [
+        "dealer",
+        "real_estate",
+        "local_services"
+      ],
+      "description": "Business vertical"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "contacted",
+        "qualifying",
+        "qualified",
+        "appointment_scheduled",
+        "converted",
+        "lost",
+        "escalated"
+      ],
+      "default": "new"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "default": "medium"
+    },
+    "intent_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "AI-calculated intent score"
+    },
+    "budget": {
+      "type": "string",
+      "description": "Budget range or amount"
+    },
+    "timeline": {
+      "type": "string",
+      "description": "When they want to buy/book"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes about the lead"
+    },
+    "vertical_data": {
+      "type": "object",
+      "description": "Vertical-specific data (vehicle interest, property type, service needed)"
+    },
+    "follow_up_day": {
+      "type": "number",
+      "default": 0,
+      "description": "Current day in follow-up sequence"
+    },
+    "last_contact_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "next_follow_up_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "assigned_to": {
+      "type": "string",
+      "description": "User email of assigned agent"
+    }
+  },
+  "required": [
+    "name",
+    "vertical"
+  ]
+}

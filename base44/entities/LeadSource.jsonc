@@ -1,0 +1,82 @@
+{
+  "name": "LeadSource",
+  "type": "object",
+  "properties": {
+    "source_name": {
+      "type": "string",
+      "description": "Name of the lead source"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "adf_email",
+        "csv_import",
+        "api",
+        "web_form",
+        "crm_webhook",
+        "manual"
+      ],
+      "description": "Type of lead ingestion channel"
+    },
+    "dealer_id": {
+      "type": "string",
+      "description": "Associated dealer ID"
+    },
+    "api_key": {
+      "type": "string",
+      "description": "API key for authenticated sources"
+    },
+    "config": {
+      "type": "object",
+      "properties": {
+        "email_address": {
+          "type": "string"
+        },
+        "webhook_url": {
+          "type": "string"
+        },
+        "form_embed_code": {
+          "type": "string"
+        },
+        "rate_limit": {
+          "type": "number",
+          "default": 100
+        },
+        "field_mapping": {
+          "type": "object"
+        }
+      }
+    },
+    "stats": {
+      "type": "object",
+      "properties": {
+        "total_leads": {
+          "type": "number",
+          "default": 0
+        },
+        "last_received": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "inactive",
+            "error"
+          ],
+          "default": "active"
+        }
+      }
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "source_name",
+    "source_type",
+    "dealer_id"
+  ]
+}

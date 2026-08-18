@@ -1,0 +1,52 @@
+{
+  "name": "LeadDuplicate",
+  "type": "object",
+  "properties": {
+    "original_lead_id": {
+      "type": "string",
+      "description": "ID of the original lead"
+    },
+    "duplicate_lead_id": {
+      "type": "string",
+      "description": "ID of the duplicate lead"
+    },
+    "match_type": {
+      "type": "string",
+      "enum": [
+        "exact_email",
+        "exact_phone",
+        "exact_vin",
+        "fuzzy_name",
+        "combined"
+      ],
+      "description": "How the duplicate was detected"
+    },
+    "match_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Confidence score of duplicate match"
+    },
+    "time_window_hours": {
+      "type": "number",
+      "description": "Hours between original and duplicate"
+    },
+    "action_taken": {
+      "type": "string",
+      "enum": [
+        "merged",
+        "flagged",
+        "ignored"
+      ],
+      "default": "flagged"
+    },
+    "dealer_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "original_lead_id",
+    "duplicate_lead_id",
+    "match_type"
+  ]
+}

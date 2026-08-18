@@ -1,0 +1,63 @@
+{
+  "name": "SavedSearch",
+  "type": "object",
+  "properties": {
+    "search_name": {
+      "type": "string",
+      "description": "Name of the saved search"
+    },
+    "dealer_id": {
+      "type": "string",
+      "description": "Owner dealer ID"
+    },
+    "filters": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "priority": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "date_from": {
+          "type": "string",
+          "format": "date"
+        },
+        "date_to": {
+          "type": "string",
+          "format": "date"
+        },
+        "intent_score_min": {
+          "type": "number"
+        },
+        "intent_score_max": {
+          "type": "number"
+        },
+        "keyword": {
+          "type": "string"
+        }
+      }
+    },
+    "is_public": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "search_name",
+    "dealer_id",
+    "filters"
+  ]
+}

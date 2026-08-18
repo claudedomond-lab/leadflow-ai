@@ -1,0 +1,194 @@
+{
+  "name": "DealerConfig",
+  "type": "object",
+  "properties": {
+    "dealer_name": {
+      "type": "string",
+      "description": "Dealership business name"
+    },
+    "dealer_id": {
+      "type": "string",
+      "description": "Unique dealer identifier"
+    },
+    "location": {
+      "type": "string",
+      "description": "Physical location/address"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Dealer main phone number"
+    },
+    "email": {
+      "type": "string",
+      "description": "Dealer contact email"
+    },
+    "business_hours": {
+      "type": "object",
+      "properties": {
+        "monday": {
+          "type": "string"
+        },
+        "tuesday": {
+          "type": "string"
+        },
+        "wednesday": {
+          "type": "string"
+        },
+        "thursday": {
+          "type": "string"
+        },
+        "friday": {
+          "type": "string"
+        },
+        "saturday": {
+          "type": "string"
+        },
+        "sunday": {
+          "type": "string"
+        }
+      }
+    },
+    "escalation_contacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "lead_sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source_name": {
+            "type": "string"
+          },
+          "source_type": {
+            "type": "string",
+            "enum": [
+              "crm",
+              "form",
+              "api",
+              "webhook"
+            ]
+          },
+          "webhook_url": {
+            "type": "string"
+          },
+          "field_mapping": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "inventory_data": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "api_url": {
+          "type": "string"
+        },
+        "last_synced": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "vehicle_count": {
+          "type": "number"
+        }
+      }
+    },
+    "calendar_config": {
+      "type": "object",
+      "properties": {
+        "test_drive_duration": {
+          "type": "number",
+          "default": 60
+        },
+        "available_slots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "booking_buffer": {
+          "type": "number",
+          "default": 2
+        }
+      }
+    },
+    "follow_up_rules": {
+      "type": "object",
+      "properties": {
+        "day_0_active": {
+          "type": "boolean",
+          "default": true
+        },
+        "day_3_active": {
+          "type": "boolean",
+          "default": true
+        },
+        "day_5_active": {
+          "type": "boolean",
+          "default": true
+        },
+        "day_7_active": {
+          "type": "boolean",
+          "default": true
+        },
+        "auto_escalate_after_days": {
+          "type": "number",
+          "default": 7
+        }
+      }
+    },
+    "setup_status": {
+      "type": "string",
+      "enum": [
+        "incomplete",
+        "testing",
+        "active"
+      ],
+      "default": "incomplete"
+    },
+    "test_results": {
+      "type": "object",
+      "properties": {
+        "sms_test": {
+          "type": "string"
+        },
+        "calendar_test": {
+          "type": "string"
+        },
+        "webhook_test": {
+          "type": "string"
+        },
+        "last_tested": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "internal_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "dealer_name",
+    "dealer_id"
+  ]
+}
